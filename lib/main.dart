@@ -1,0 +1,45 @@
+import 'package:flutter/material.dart';
+import 'package:news_gsg_project/view/screens/home_screen.dart';
+
+
+void main() {
+  runApp(MyApp());
+}
+final ValueNotifier<ThemeMode> myNotifier = ValueNotifier(ThemeMode.light);
+// make call back function to theme mode
+
+class MyApp extends StatefulWidget {
+  MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool isDark = false;
+  changeTheme(bool value) {
+    isDark = value;
+    setState(() {});
+  }
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: myNotifier,
+      builder: (key,value,child){
+        return MaterialApp(
+          theme: ThemeData.light(),
+          darkTheme: ThemeData.dark(),
+          themeMode: value,
+          debugShowCheckedModeBanner: false,
+          home:HomeScreen(),
+        );
+      },
+
+    );
+  }
+}
+
+
+
+
