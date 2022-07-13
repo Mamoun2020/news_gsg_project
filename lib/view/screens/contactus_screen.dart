@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ContactusScreen extends StatefulWidget {
@@ -30,6 +31,11 @@ class _ContactusScreenState extends State<ContactusScreen> {
     String smsUrl = "sms:$telephoneNumber";
     launchUrl(Uri.parse(smsUrl));
   }
+  void _onShare(BuildContext context,text,link) async {
+    final box = context.findRenderObject() as RenderBox;
+    
+    await Share.share(text,subject: link,sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +47,8 @@ class _ContactusScreenState extends State<ContactusScreen> {
             ElevatedButton(onPressed: (){_launchBrowser();}, child: Text('call us',style: TextStyle(fontWeight: FontWeight.bold,),)),
             ElevatedButton(onPressed: (){sendMessageByWhatsapp();}, child: Text('whatsapp',style: TextStyle(fontWeight: FontWeight.bold,),)),
             ElevatedButton(onPressed: (){sendMessageEmail();}, child: Text('email',style: TextStyle(fontWeight: FontWeight.bold,),)),
-            ElevatedButton(onPressed: (){sendSMS();}, child: Text('sms',style: TextStyle(fontWeight: FontWeight.bold,),)),
+            ElevatedButton(onPressed: (){sendSMS();}, child: Text('email',style: TextStyle(fontWeight: FontWeight.bold,),)),
+            ElevatedButton(onPressed: (){_onShare(context, 'hello world','support@smartpicktech.com');}, child: Text('share it ',style: TextStyle(fontWeight: FontWeight.bold,),)),
           ],
         ),
       ),
